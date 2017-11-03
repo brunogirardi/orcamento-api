@@ -24,3 +24,15 @@ Route::group(['prefix' => 'insumos'], function() {
     Route::patch('/{id}', 'InsumosController@update');
     Route::delete('/{id}', 'InsumosController@destroy');
 });
+
+Route::group(['prefix' => 'cpus'], function() {
+    Route::get('/{id}', 'CpusController@show');
+    Route::get('/', 'CpusController@index');
+    Route::post('/', 'CpusController@store');
+    Route::patch('/{id}', 'CpusController@update');
+    Route::delete('/{id}', 'CpusController@destroy');
+
+    Route::group(['prefix' => '/{id}/item'], function() {
+        Route::post('/', 'CpuItensController@store');
+    });
+});

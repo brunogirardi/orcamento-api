@@ -13,4 +13,10 @@ class insumos extends Model
 
     }
 
+    public function insumos() {
+        
+        $this->hasMany(cpu_itens::class);
+        
+    }
+
 }
