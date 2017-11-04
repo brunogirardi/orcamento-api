@@ -9,7 +9,7 @@ class tipos extends Model
 
     public function insumos() {
         
-        $this->hasMany(insumos::class);
+        $this->hasMany(insumos::class, 'tipos_id');
         
     }
 

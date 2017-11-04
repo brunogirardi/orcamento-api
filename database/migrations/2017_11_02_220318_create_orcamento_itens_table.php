@@ -16,8 +16,8 @@ class CreateOrcamentoItensTable extends Migration
         Schema::create('orcamento_itens', function (Blueprint $table) {
             
             $table->increments('id');
-            $table->integer('insumos_id')->unsigned();
             $table->integer('orcamento_dados_id')->unsigned();
+            $table->integer('insumos_id')->unsigned();
             $table->float('quantidade');
             $table->timestamps();
 

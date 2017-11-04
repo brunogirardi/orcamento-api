@@ -4,16 +4,16 @@ namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class cpu_itens extends Model
+class cpu_items extends Model
 {
-    
-    public function cpu() {
+
+    public function insumo() {
         
-        return $this->belongsTo(insumos::class, 'insumos_cpu_id');
+        return $this->belongsTo(insumos::class);
 
     }
 
-    public function insumo() {
+    public function dados() {
         
         return $this->belongsTo(insumos::class, 'insumos_item_id');
 

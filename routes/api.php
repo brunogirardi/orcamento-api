@@ -32,7 +32,10 @@ Route::group(['prefix' => 'cpus'], function() {
     Route::patch('/{id}', 'CpusController@update');
     Route::delete('/{id}', 'CpusController@destroy');
 
-    Route::group(['prefix' => '/{id}/item'], function() {
+    Route::group(['prefix' => '/{cpu}/item'], function() {
+        Route::get('/', 'CpuItensController@show');
         Route::post('/', 'CpuItensController@store');
+        Route::patch('/{item}', 'CpuItensController@update');
+        Route::delete('/{item}', 'CpuItensController@destroy');
     });
 });

@@ -3,9 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
-use App\Http\Resources\CpuItem;
 
-class Insumos extends Resource
+class Cpus extends Resource
 {
     /**
      * Transform the resource into an array.
@@ -15,14 +14,13 @@ class Insumos extends Resource
      */
     public function toArray($request)
     {
-        
         return [
             'id' => $this->id,
             'descricao' => $this->descricao,
             'unidade' => $this->unidade,
             'tipo' => $this->tipos->nome,
-            'valor' => $this->cst_total
+            'valor' => $this->cst_total,
+            'itens' => CpuItem::collection($this->whenLoaded('items'))
         ];
-
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\insumos;
-use App\Http\Resources\Insumos as InsumosResource;
+use App\Http\Resources\Cpus as cpusResource;
 use App\Http\Requests\StoreCpusRequests;
 
 class CpusController extends Controller
@@ -20,19 +20,25 @@ class CpusController extends Controller
 
         $insumo->save();
 
-        return new InsumosResource($insumo);
+        return new cpusResource($insumo);
 
     }
 
     function index() {
         
-        return InsumosResource::collection(Insumos::where('tipos_id', 6)->get());
+        return cpusResource::collection(Insumos::where('tipos_id', 6)->get());
 
     }
 
     function show($id) {
 
-        return new InsumosResource(Insumos::find($id));
+        $cpu = Insumos::where('id', $id)->with('items')->first();
+
+        if ($cpu->tipos_id == 6){
+            return new cpusResource($cpu);
+        } else {
+            return response('Item invalido', 404);
+        }
 
     }
 
@@ -46,15 +52,38 @@ class CpusController extends Controller
 
         $insumo->save();
 
-        return new InsumosResource($insumo);
+        return new cpusResource($insumo);
 
     }
 
     function destroy($id) {
 
-        Insumos::destroy($id);
+        $cpu = Insumos::find($id);
         
-        return response(null, 204);
+        if ($this->isCpu($cpu)){
+            $cpu->delete();
+            return response(null, 204);
+        } else {
+            return response('Item removido com sucesso', 204);
+        }
+        
 
     }
+
+    // Funções utilitárias
+
+    private function isCpu($cpu) {
+
+        if (!is_null($cpu)){
+            if ($cpu->tipos_id == 6){
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+    }
+
 }

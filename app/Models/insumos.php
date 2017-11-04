@@ -13,10 +13,17 @@ class insumos extends Model
 
     }
 
-    public function insumos() {
+    public function items() {
+
+        return $this->hasMany(cpu_items::class, 'insumos_cpu_id');
+
+    }
+
+
+    public function dados() {
         
-        $this->hasMany(cpu_itens::class);
-        
+        return $this->belongsTo(cpu_items::class, 'insumos_item_id');
+
     }
 
 }
