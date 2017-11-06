@@ -28,7 +28,7 @@ class InsumosController extends Controller
     function index() {
         
         //return InsumosResource::collection(Insumos::with(['tipos', 'items'])->get());
-        return InsumosResource::collection(Insumos::all());
+        return InsumosResource::collection(Insumos::where('tipos_id', '<>', 6)->get());
 
     }
 
