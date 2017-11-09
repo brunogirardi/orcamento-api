@@ -19,7 +19,7 @@ class Cpus extends Resource
             'descricao' => $this->descricao,
             'unidade' => $this->unidade,
             'tipo' => $this->tipos->nome,
-            'valor' => $this->cst_total,
+            'cst_total' => $this->cst_total,
             'itens' => CpuItem::collection($this->whenLoaded('items'))
         ];
     }

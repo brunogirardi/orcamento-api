@@ -26,7 +26,7 @@ class CpusController extends Controller
 
     function index() {
         
-        return cpusResource::collection(Insumos::where('tipos_id', 6)->get());
+        return cpusResource::collection(Insumos::where('tipos_id', 6)->with('tipos')->get());
 
     }
 
