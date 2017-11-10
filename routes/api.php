@@ -23,6 +23,7 @@ Route::group(['prefix' => 'insumos'], function() {
     Route::post('/', 'InsumosController@store');
     Route::patch('/{id}', 'InsumosController@update');
     Route::delete('/{id}', 'InsumosController@destroy');
+
 });
 
 Route::group(['prefix' => 'cpus'], function() {
@@ -38,4 +39,10 @@ Route::group(['prefix' => 'cpus'], function() {
         Route::patch('/{item}', 'CpuItensController@update');
         Route::delete('/{item}', 'CpuItensController@destroy');
     });
+
+});
+
+Route::group(['prefix' => '/items'], function () {
+    // Relaciona todos os insumos no formato de CpuItem
+    Route::get('/', 'CpuItensController@index');
 });

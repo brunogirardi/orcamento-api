@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\cpu_items;
 use App\Http\Resources\CpuItem as itemResource;
+use App\Models\insumos;
+use App\Http\Resources\Insumos as InsumosResource;
 
 class CpuItensController extends Controller
 {
@@ -28,6 +30,12 @@ class CpuItensController extends Controller
         $items = cpu_items::where('insumos_cpu_id', $cpu)->get();
         
         return itemResource::collection($items);
+
+    }
+
+    function index() {
+
+        return itemResource::collection(Insumos::all());
 
     }
 

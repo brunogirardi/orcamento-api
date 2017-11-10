@@ -16,11 +16,14 @@ class CpuItem extends Resource
     {
         return [
             'id' => $this->id,
+            'insumos_id' => $this->insumos_item_id,
             'descricao' => $this->dados->descricao,
             'unidade' => $this->dados->unidade,
+            'tipos_id' => $this->dados->tipos_id,
             'tipo' => $this->dados->tipos->nome,
             'quantidade' => $this->coeficiente,
-            'valor' => $this->dados->cst_total,
+            'cst_total' => $this->dados->cst_total,
+            'isNew' => false
             // 'total' => round($this->dados->cst_total * $this->coeficiente, 2)
         ];
     }
