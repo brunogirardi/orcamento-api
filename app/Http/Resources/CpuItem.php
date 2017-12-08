@@ -22,9 +22,7 @@ class CpuItem extends Resource
             'tipos_id' => $this->dados->tipos_id,
             'tipo' => $this->dados->tipos->nome,
             'quantidade' => $this->coeficiente,
-            'cst_total' => $this->dados->cst_total,
-            'isNew' => false
-            // 'total' => round($this->dados->cst_total * $this->coeficiente, 2)
+            'cst_total' => $this->dados->cst_total
         ];
     }
 }

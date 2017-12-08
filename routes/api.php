@@ -27,6 +27,8 @@ Route::group(['prefix' => 'insumos'], function() {
 });
 
 Route::group(['prefix' => 'cpus'], function() {
+
+    // Manipulates de Header of the CPU
     Route::get('/{id}', 'CpusController@show');
     Route::get('/', 'CpusController@index');
     Route::post('/', 'CpusController@store');
@@ -38,6 +40,30 @@ Route::group(['prefix' => 'cpus'], function() {
         Route::post('/', 'CpuItensController@store');
         Route::patch('/{item}', 'CpuItensController@update');
         Route::delete('/{item}', 'CpuItensController@destroy');
+    });
+
+    // Manipulates the hole CPU
+    Route::post('/full', 'CpusController@fullStore');
+    Route::patch('/{id}/full', 'CpusController@fullUpdate');
+
+});
+
+Route::group(['prefix' => 'orcamento'], function() {
+    
+    // Manipulates the Header of the Budgets
+    Route::get('/{id}', 'OrcamentoController@show');
+    Route::get('/', 'OrcamentoController@index');
+    Route::post('/', 'OrcamentoController@store');
+    Route::patch('/{id}', 'OrcamentoController@update');
+    Route::delete('/{id}', 'OrcamentoController@destroy');
+
+    // Manipulates the BDI form the Budgets
+    Route::group(['prefix' => '/{orcamento}/bdi'], function() {
+        Route::get('/', 'OrcamentoBdiController@index');
+        Route::post('/', 'OrcamentoBdiController@store');
+        Route::get('/{id}', 'OrcamentoBdiController@show');
+        Route::patch('/{id}', 'OrcamentoBdiController@update');
+        Route::delete('/{id}', 'OrcamentoBdiController@destroy');
     });
 
 });

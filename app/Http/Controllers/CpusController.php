@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\insumos;
+use App\Models\cpu_items;
 use App\Http\Resources\Cpus as cpusResource;
 use App\Http\Requests\StoreCpusRequests;
 
 class CpusController extends Controller
 {
+
     function store(Request $request) {
         
         $insumo = new Insumos();
@@ -70,8 +72,87 @@ class CpusController extends Controller
 
     }
 
-    // Funções utilitárias
+    function fullStore(Request $request) {
 
+        $insumo = new Insumos();
+        
+        $insumo->tipos_id = 6;
+        $insumo->descricao = $request->descricao;
+        $insumo->unidade = $request->unidade;
+        $insumo->cst_total = $request->cst_total;
+        $insumo->cst_mo = $request->cst_mo;
+        $insumo->cst_outros = $request->cst_outros;
+
+        $insumo->save();
+        
+        foreach ($request->itens as $elemento) {
+
+            // Ignora itens com status de Excluido
+            if($elemento['status'] != 2) {
+
+                // Salva no banco de dados
+                $item = new cpu_items();
+    
+                $item->insumos_cpu_id = $insumo->id;
+                $item->insumos_item_id = $elemento['insumos_id'];
+                $item->coeficiente = $elemento['quantidade'];
+        
+                $item->save();
+
+            }
+
+        }
+
+        $cpu = Insumos::where('id', $insumo->id)->with('items')->first();
+        return new cpusResource($cpu);
+
+    }
+
+    function fullUpdate(Request $request, $id) {
+
+        $insumo = Insumos::find($request->id);
+        
+        $insumo->descricao = $request->descricao;
+        $insumo->unidade = $request->unidade;
+        $insumo->cst_total = $request->cst_total;
+        $insumo->cst_mo = $request->cst_mo;
+        $insumo->cst_outros = $request->cst_outros;
+
+        $insumo->save();
+        
+        foreach ($request->itens as $elemento) {
+
+            // Adiciona itens novos a CPU
+            if ($elemento['status'] == 3) {
+                $item = new cpu_items();
+                $item->insumos_cpu_id = $insumo->id;
+                $item->insumos_item_id = $elemento['insumos_id'];
+                $item->coeficiente = $elemento['quantidade'];
+                $item->save();
+            }
+
+            // Atualiza itens já presentes na CPU
+            else if ($elemento['status'] == 1) {
+                $item = cpu_items::find($elemento['id']);
+                $item->coeficiente = $elemento['quantidade'];
+                $item->save();
+            }
+
+            // Remove itens apagados da CPU
+            else if ($elemento['status'] == 2) {
+                if ($elemento['id'] != null) {
+                    cpu_items::destroy($elemento['id']);
+                }
+            }
+            
+        }
+
+        $cpu = Insumos::where('id', $insumo->id)->with('items')->first();
+        return new cpusResource($cpu);
+
+    }
+
+    // Funções utilitárias
     private function isCpu($cpu) {
 
         if (!is_null($cpu)){

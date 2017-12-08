@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrcamentoDadosTable extends Migration
+class CreateOrcamentoBdi extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,15 @@ class CreateOrcamentoDadosTable extends Migration
      */
     public function up()
     {
-        Schema::create('orcamento_dados', function (Blueprint $table) {
-
+        Schema::create('orcamento_bdi', function (Blueprint $table) {
+            
             $table->increments('id');
+            $table->integer('orcamento_dados_id')->unsigned();
             $table->text('descricao');
-            $table->string('endereco', 300);
-            $table->string('cliente', 300);
-            $table->string('contrato', 150);
-            $table->date('data_base');
-            $table->float('ls_hora');
-            $table->float('ls_mes');
+            $table->float('valor');
             $table->timestamps();
 
+            $table->foreign('orcamento_dados_id')->references('id')->on('orcamento_dados');
         });
     }
 
@@ -35,6 +32,6 @@ class CreateOrcamentoDadosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orcamento_dados');
+        Schema::dropIfExists('orcamento_bdi');
     }
 }
