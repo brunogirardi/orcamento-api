@@ -13,16 +13,17 @@ class CreateOrcamentoItensTable extends Migration
      */
     public function up()
     {
-        Schema::create('orcamento_itens', function (Blueprint $table) {
+        Schema::create('orcamento_items', function (Blueprint $table) {
             
             $table->increments('id');
             $table->integer('orcamento_dados_id')->unsigned();
             $table->integer('sequencia')->unsigned();
+            $table->integer('nivel')->unsigned();
             $table->string('itemizacao')->nullable();
             $table->integer('insumos_id')->unsigned()->nullable();
             $table->text('descricao')->nullable();
             $table->float('quantidade')->nullable();
-            $table->integer('bdi_id')->nullable();
+            $table->integer('orcamento_bdi_id')->nullable();
             $table->timestamps();
 
             $table->foreign('insumos_id')->references('id')->on('insumos');
@@ -37,6 +38,6 @@ class CreateOrcamentoItensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orcamento_itens');
+        Schema::dropIfExists('orcamento_items');
     }
 }

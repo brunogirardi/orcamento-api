@@ -57,13 +57,24 @@ Route::group(['prefix' => 'orcamento'], function() {
     Route::patch('/{id}', 'OrcamentoController@update');
     Route::delete('/{id}', 'OrcamentoController@destroy');
 
-    // Manipulates the BDI form the Budgets
+    // Manipulates the BDI from the Budgets
     Route::group(['prefix' => '/{orcamento}/bdi'], function() {
         Route::get('/', 'OrcamentoBdiController@index');
         Route::post('/', 'OrcamentoBdiController@store');
         Route::get('/{id}', 'OrcamentoBdiController@show');
         Route::patch('/{id}', 'OrcamentoBdiController@update');
         Route::delete('/{id}', 'OrcamentoBdiController@destroy');
+    });
+
+    // Manipulates the items from the Budgets
+    Route::group(['prefix' => '/{orcamento}/item'], function() {
+        Route::get('/', 'OrcamentoItemController@index');
+        Route::post('/', 'OrcamentoItemController@storeInsumo');
+        Route::post('/nivel', 'OrcamentoItemController@storeNivel');
+        Route::get('/{id}', 'OrcamentoItemController@show');
+        Route::patch('/{id}', 'OrcamentoItemController@updateInsumo');
+        Route::patch('/{id}/Nivel', 'OrcamentoItemController@updateNivel');
+        Route::delete('/{id}', 'OrcamentoItemController@destroy');
     });
 
 });

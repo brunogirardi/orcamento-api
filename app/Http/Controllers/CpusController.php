@@ -34,7 +34,7 @@ class CpusController extends Controller
 
     function show($id) {
 
-        $cpu = Insumos::where('id', $id)->with('items')->first();
+        $cpu = Insumos::where('id', $id)->with('insumos')->first();
 
         if ($cpu->tipos_id == 6){
             return new cpusResource($cpu);

@@ -19,10 +19,15 @@ class insumos extends Model
 
     }
 
-
     public function dados() {
         
         return $this->belongsTo(cpu_items::class, 'insumos_item_id');
+
+    }
+
+    public function orcamento() {
+        
+        return $this->hasMany(orcamento_items::class, 'insumos_id');
 
     }
 
