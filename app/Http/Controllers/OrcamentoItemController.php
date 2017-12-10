@@ -9,15 +9,14 @@ use Illuminate\Support\Facades\DB;
 
 class OrcamentoItemController extends Controller
 {
+
     function index($orcamento) {
-        $query =   "SELECT * 
-                    FROM orcamento_items as o
-                    LEFT JOIN insumos as i ON i.id = o.insumos_id
-                    WHERE o.orcamento_dados_id =" . $orcamento;
 
-        //dd($query);
-
-        return OrcamentoItemResource::collection(DB::select($query));
+        return OrcamentoItemResource::collection(orcamento_items::where('orcamento_dados_id', $orcamento)
+            ->orderBy('sequencia')
+            ->with('insumos')
+            ->get());
+    
     }
 
     function show($orcamento, $id) {

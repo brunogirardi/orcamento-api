@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class cpu_items extends Model
 {
 
-    public function insumo() {
+    public function items() {
         
         return $this->belongsTo(insumos::class);
 
