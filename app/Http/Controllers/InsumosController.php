@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\insumos;
 use App\Http\Resources\Insumos as InsumosResource;
 use App\Http\Requests\StoreInsumosRequests;
+use Illuminate\Support\Facades\DB;
 
 class InsumosController extends Controller
 {
 
-    function store(StoreInsumosRequests $request) {
+    function store(Request $request) {
 
         $insumo = new Insumos();
 
@@ -26,7 +27,8 @@ class InsumosController extends Controller
     }
 
     function index() {
-        return InsumosResource::collection(Insumos::where('tipos_id', '<>', 6)->get());
+        //return InsumosResource::collection(Insumos::where('tipos_id', '<>', 6)->get());
+        return InsumosResource::collection(Insumos::all());
     }
 
 
@@ -34,8 +36,8 @@ class InsumosController extends Controller
         return new InsumosResource(Insumos::find($id));
     }
 
-    function update(StoreInsumosRequests $request, $id) {
-        
+    function update(Request $request, $id) {
+
         $insumo = Insumos::find($id);
 
         $insumo->tipos_id = $request->tipos_id;
@@ -44,6 +46,9 @@ class InsumosController extends Controller
         $insumo->cst_total = $request->cst_total;
 
         $insumo->save();
+
+        DB::statement(DB::raw("set @@max_sp_recursion_depth = 255;"));
+        DB::statement(DB::raw("call update_cpu_valor_unitario({$id});"));
 
         return new InsumosResource($insumo);
 

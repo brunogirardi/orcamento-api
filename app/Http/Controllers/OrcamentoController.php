@@ -17,7 +17,7 @@ class OrcamentoController extends Controller
 
     function show($id) {
         
-        return new OrcamentoResource(Orcamento::find($id));
+        return new OrcamentoResource(Orcamento::where('id', $id)->with('bdi')->first());
 
     }
 
