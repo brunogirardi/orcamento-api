@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\orcamento_items;
 use App\Http\Resources\OrcamentoItem as OrcamentoItemResource;
+use App\Http\Resources\MyGenerico;
 use Illuminate\Support\Facades\DB;
 
 class OrcamentoItemController extends Controller
@@ -12,10 +13,10 @@ class OrcamentoItemController extends Controller
 
     function index($orcamento) {
 
-        return OrcamentoItemResource::collection(orcamento_items::where('orcamento_dados_id', $orcamento)
-            ->orderBy('sequencia')
-            ->with('insumos')
-            ->get());
+        $data = array("data" => DB::select("call orcamentoIndexItens(1);"));
+
+        return response()
+            ->json($data);
     
     }
 
