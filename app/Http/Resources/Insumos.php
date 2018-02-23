@@ -22,7 +22,9 @@ class Insumos extends Resource
             'unidade' => $this->unidade,
             'tipo' => $this->tipos->nome,
             'tipos_id' => $this->tipos_id,
-            'cst_total' => $this->cst_total
+            'cst_total' => $this->cst_total,
+            'cst_mo' => $this->cst_mo,
+            'cst_outros' => $this->cst_outros
         ];
 
     }

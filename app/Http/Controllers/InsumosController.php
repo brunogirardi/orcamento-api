@@ -19,6 +19,11 @@ class InsumosController extends Controller
         $insumo->descricao = $request->descricao;
         $insumo->unidade = $request->unidade;
         $insumo->cst_total = $request->cst_total;
+        if ($request->tipos_id == 2) {
+            $insumo->cst_mo = $request->cst_total;
+        } else {
+            $insumo->cst_outros = $request->cst_total;
+        }
 
         $insumo->save();
 
@@ -26,11 +31,19 @@ class InsumosController extends Controller
 
     }
 
+    /**
+     * Mostra a lista com todas os insumos excluso as CPUs
+     */
     function index() {
-        //return InsumosResource::collection(Insumos::where('tipos_id', '<>', 6)->get());
-        return InsumosResource::collection(Insumos::all());
+        return InsumosResource::collection(Insumos::where('tipos_id', '<>', 6)->get());
     }
 
+    /**
+     * Mostra a lista completa de insumos com inclusão das CPUs
+     */
+    function full() {
+        return InsumosResource::collection(Insumos::all());
+    }
 
     function show($id) {
         return new InsumosResource(Insumos::find($id));
@@ -44,6 +57,12 @@ class InsumosController extends Controller
         $insumo->descricao = $request->descricao;
         $insumo->unidade = $request->unidade;
         $insumo->cst_total = $request->cst_total;
+        if ($request->tipos_id == 2) {
+            $insumo->cst_mo = $request->cst_total;
+        } else {
+            $insumo->cst_outros = $request->cst_total;
+        }
+
 
         $insumo->save();
 

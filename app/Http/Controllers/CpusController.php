@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\insumos;
 use App\Models\cpu_items;
 use App\Http\Resources\Cpus as cpusResource;
+use App\Http\Resources\Generico;
 use App\Http\Requests\StoreCpusRequests;
+use Illuminate\Support\Facades\DB;
 
 class CpusController extends Controller
 {
@@ -61,15 +63,14 @@ class CpusController extends Controller
     function destroy($id) {
 
         $cpu = Insumos::find($id);
-        
+
         if ($this->isCpu($cpu)){
-            $cpu->delete();
-            return response(null, 204);
-        } else {
+            DB::statement("call CpuDeletar({$id});");
             return response('Item removido com sucesso', 204);
+        } else {
+            return response('Item invalido', 404);
         }
         
-
     }
 
     function fullStore(Request $request) {
@@ -148,6 +149,15 @@ class CpusController extends Controller
         }
 
         $cpu = Insumos::where('id', $insumo->id)->with('items')->first();
+        return new cpusResource($cpu);
+
+    }
+
+    function duplicate($id) {
+
+        $resposta = DB::select("call CpuDuplicar({$id});");
+ 
+        $cpu = Insumos::where('id', $resposta[0]->nova_cpu)->with('items')->first();
         return new cpusResource($cpu);
 
     }

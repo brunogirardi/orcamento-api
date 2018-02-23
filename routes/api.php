@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'insumos'], function() {
+    Route::get('/completa', 'InsumosController@full');
     Route::get('/{id}', 'InsumosController@show');
     Route::get('/', 'InsumosController@index');
     Route::post('/', 'InsumosController@store');
@@ -31,6 +32,7 @@ Route::group(['prefix' => 'cpus'], function() {
     // Manipulates de Header of the CPU
     Route::get('/{id}', 'CpusController@show');
     Route::get('/', 'CpusController@index');
+    Route::get('/{id}/duplicate', 'CpusController@duplicate');
     Route::post('/', 'CpusController@store');
     Route::patch('/{id}', 'CpusController@update');
     Route::delete('/{id}', 'CpusController@destroy');
