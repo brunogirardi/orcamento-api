@@ -13,7 +13,7 @@ class OrcamentoItemController extends Controller
 
     function index($orcamento) {
 
-        $data = array("data" => DB::select("call orcamentoIndexItens(1);"));
+        $data = DB::select("call orcamentoIndexItens(1);");
 
         return response()
             ->json($data);
